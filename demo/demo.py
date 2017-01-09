@@ -18,7 +18,7 @@ def print_tag(event, editor):
     def _():
         cursor = editor.index('insert')
         try:
-            print(editor.tag_names(cursor))
+            print(cursor, ' ',editor.tag_names(cursor))
         except IndexError:
             pass
     editor.after_idle(_)
@@ -73,6 +73,13 @@ editor.focus_set()
 # Clicking will print the tags at that char
 editor.bind('<Button-1>', lambda e, editor=editor: print_tag(e, editor))
 
+# Pdb
+import pdb
+def _():
+    pdb.set_trace()
+    return 'break'
+editor.bind('<9>', lambda e: _())
+
 # Style for ttk button styles for button state toggling
 button_styling.install(root, imgdir='img')
 
@@ -109,7 +116,7 @@ class FamilyMenu(util.MakerOptionMenu):
         self.conPack = {'expand':0,'side':'left'}
         self.frm_style = {'width':20}
     def run_command(self,value):
-        editor.tag_manager.style_change(('family',value))
+        editor.rtflib.style_change(('family',value))
 
 class SizeMenu(util.MakerOptionMenu):
     def start(self):
@@ -118,7 +125,7 @@ class SizeMenu(util.MakerOptionMenu):
         self.conPack = {'expand':0,'side':'left'}
         self.frm_style = {'width':20}
     def run_command(self,value):
-        editor.tag_manager.style_change(('size',value))
+        editor.rtflib.style_change(('size',value))
 
 class Colour(ttk.Button):
     def __init__(self, parent, colour_type, **kwargs):
@@ -145,7 +152,10 @@ foreground = Colour(root, colour_type='foreground', text='A')
 background = Colour(root, colour_type='background', text ='H')
 
 # Setting up button references for indenting and value setting
-def event_handler(key, value):
+def event_handler(key, value): # TODO move into haxe core
+    print('event_handler ', key)
+    if key == 'reset':
+        util.button_change(bold, 0)
     if value == 'bold':
         util.button_change(bold)
     elif value == 'italic':

@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = 'pyhxrtflib',
+    name = 'tkpyhxrtflib',
     version='0.0.1',
     description = 'text plugin - easily save and load multiple font styles',
-    # url = 'https://github.com/timeyyy/tttt',
+    url = 'https://github.com/nudebandage/tkpyhxrtflib',
     author='timothy eichler',
     author_email='tim_eichler@hotmail.com',
     license='BSD',
@@ -12,12 +12,11 @@ setup(
             'Development Status :: 3 - Alpha',
             'Intended Audience :: Developers',
             'License :: OSI Approved :: BSD License',
-            'Programming Language :: Python :: 2',
             'Programming Language :: Python :: 3',
     ],
 
     # What does your project relate to?
-    keywords = 'text font style bold underline italic color',
+    keywords = 'text font style bold underline italic color hxrtflib',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().

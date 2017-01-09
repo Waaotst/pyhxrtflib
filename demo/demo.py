@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
-from pyhxrtflib import PyTextRtf
+from tkpyhxrtflib import PyTextRtf
 
 try:
     from . import button_styling

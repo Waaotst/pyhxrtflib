@@ -10,7 +10,7 @@ from tkinter import font as tk_font
 from hxrtflib import hxrtflib_Hxrtflib as Hxrtflib
 from hxrtflib import hxrtflib_Globals as Globals
 
-from pyhxrtflib.util import debug_echo
+from tkpyhxrtflib.util import debug_echo
 
 IGNORE_KEYS = ('Left',
                'Down',

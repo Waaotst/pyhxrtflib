@@ -1,3 +1,4 @@
+from os.path import join, dirname
 import tkinter as tk
 import tkinter.ttk as ttk
 
@@ -81,7 +82,8 @@ def _():
 editor.bind('<9>', lambda e: _())
 
 # Style for ttk button styles for button state toggling
-button_styling.install(root, imgdir='img')
+button_styling.install(root, imgdir=join(dirname(__file__),
+                                         'img'))
 
 # Setting up Keybinds
 editor.bind('<Control-Key-b>', lambda e:editor.rtflib.style_change('weight', 'bold'))

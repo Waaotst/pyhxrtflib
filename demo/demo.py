@@ -159,10 +159,10 @@ def event_handler(key, value):
         print('Reset')
         util.button_change(bold, 0)
         util.button_change(italic, 0)
+        print('---')
         return
 
-    print('setting',key, 'to', value)
-    print()
+    print('Setting',key, 'to', value)
     if value == 'bold':
         util.button_change(bold)
     elif value == 'italic':
@@ -177,9 +177,22 @@ def event_handler(key, value):
         util.menu_change(foreground, value)
     elif key == 'background':
         util.menu_change(background, value)
+    print()
     return
 
-editor.rtflib.register_consumer(event_handler)
+def apply_screen_updates(screen_updates):
+    def do():
+        screen_updates(event_handler)
+    editor.after_idle(do)
+
+editor.rtflib.register_consumer(apply_screen_updates)
+
+def _run_consumer_ev():
+    def _():
+        print('hacked')
+        editor.rtflib.run_consumer()
+    editor.after_idle(_)
+
 
 def start():
     root.mainloop()

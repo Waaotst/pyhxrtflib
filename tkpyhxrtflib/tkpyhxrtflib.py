@@ -63,16 +63,16 @@ class PyTextRtf(tk.Text):
 
         self.tag_prefix = 'pyhxrtflib' # TODO Expose
         self.rtflib.setup(self._is_selected,
-                       self._first_selected_index,
-                       self._char_at_index,
-                       self._tag_at_index,
-                       self._tag_add,
-                       self._last_col,
-                       self._ignore_keys,
-                       self._insert_cursor_get,
-                       self._create_style,
-                       self._modify_style,
-                       self._sel_index_get)
+                          self._first_selected_index,
+                          self._char_at_index,
+                          self._tag_at_index,
+                          self._tag_add,
+                          self._last_col,
+                          self._ignore_keys,
+                          self._insert_cursor_get,
+                          self._create_style,
+                          self._modify_style,
+                          self._sel_index_get)
 
         self.bind('<Key>', self._insert_char)
         self.bind('<Button-1>', self._mouse_click)
@@ -86,8 +86,10 @@ class PyTextRtf(tk.Text):
         self.rtflib.style_change = tk_breaker(self.rtflib.style_change)
 
     def _mouse_click(self, event):
-        cursor = self._insert_cursor_get()
-        self.rtflib.on_mouse_click(cursor.row, cursor.col)
+        def _():
+            cursor = self._insert_cursor_get()
+            self.rtflib.on_mouse_click(cursor.row, cursor.col)
+        self.after_idle(_)
 
     def _insert_char(self, event):
         cursor = self.index('insert')
@@ -184,6 +186,7 @@ class PyTextRtf(tk.Text):
         ''' Convert a tk tag back to Pyhxrtflib format'''
         return int(tk_tag.split(self.tag_prefix)[-1])
 
+    # @debug_echo
     def tag_update(self, tag, index):
         '''
         We need to allow the char to be insert before adding tags,

@@ -71,10 +71,11 @@ editor = RoomEditor(root)
 editor.pack(fill='both', expand=1, pady=10)
 editor.focus_set()
 
+# TODO Document the '+', it's required otherwise our internal
+# binding gets removed
 # Clicking will print the tags at that char
-editor.bind('<Button-1>', lambda e, editor=editor: print_tag(e, editor))
+editor.bind('<Button-1>', lambda e, editor=editor: print_tag(e, editor), '+')
 
-# Pdb
 import pdb
 def _():
     pdb.set_trace()
@@ -82,8 +83,7 @@ def _():
 editor.bind('<9>', lambda e: _())
 
 # Style for ttk button styles for button state toggling
-button_styling.install(root, imgdir=join(dirname(__file__),
-                                         'img'))
+button_styling.install(root, imgdir=join(dirname(__file__), 'img'))
 
 # Setting up Keybinds
 editor.bind('<Control-Key-b>', lambda e:editor.rtflib.style_change('weight', 'bold'))
@@ -153,11 +153,16 @@ size_menu = SizeMenu(root)
 foreground = Colour(root, colour_type='foreground', text='A')
 background = Colour(root, colour_type='background', text ='H')
 
-# Setting up button references for indenting and value setting
-def event_handler(key, value): # TODO move into haxe core
-    print('event_handler ', key)
+# TODO move into haxe core
+def event_handler(key, value):
     if key == 'reset':
+        print('Reset')
         util.button_change(bold, 0)
+        util.button_change(italic, 0)
+        return
+
+    print('setting',key, 'to', value)
+    print()
     if value == 'bold':
         util.button_change(bold)
     elif value == 'italic':
@@ -172,11 +177,12 @@ def event_handler(key, value): # TODO move into haxe core
         util.menu_change(foreground, value)
     elif key == 'background':
         util.menu_change(background, value)
+    return
 
 editor.rtflib.register_consumer(event_handler)
 
 def start():
-	root.mainloop()
+    root.mainloop()
 
 if __name__ == '__main__':
     start()

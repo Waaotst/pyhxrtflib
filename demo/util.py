@@ -149,12 +149,16 @@ def button_change(but, state='toggle'):
     '''
     if state == 'toggle':
         if str(but.cget('default')) == 'normal':
+            print(but['text'], 'active')
             but.config(default='active')
         else:
+            print(but['text'], 'normal')
             but.config(default='normal')
     elif state:
+        print(but['text'], 'active')
         but.config(default='active')
     else:
+        print(but['text'], 'normal')
         but.config(default='normal')
 
 

@@ -155,6 +155,7 @@ background = Colour(root, colour_type='background', text ='H')
 
 # TODO move into haxe core
 def event_handler(key, value):
+    print('Override', editor.rtflib.override_style_get())
     if key == 'reset':
         print('Reset')
         util.button_change(bold, 0)
@@ -186,13 +187,6 @@ def apply_screen_updates(screen_updates):
     editor.after_idle(do)
 
 editor.rtflib.register_consumer(apply_screen_updates)
-
-def _run_consumer_ev():
-    def _():
-        print('hacked')
-        editor.rtflib.run_consumer()
-    editor.after_idle(_)
-
 
 def start():
     root.mainloop()

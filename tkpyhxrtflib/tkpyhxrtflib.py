@@ -22,6 +22,14 @@ IGNORE_KEYS = ('Left',
 IGNORE_CHARS = ('\x01', # Ctrl + a
                 '',)
 
+MOVE_KEYS = ('Left',
+             'Down',
+             'Right',
+             'Up',
+             'BackSpace',
+             'Prior',
+             'Next',)
+
 MODS = ('Control',
         'Alt',
         'Shift',
@@ -72,7 +80,8 @@ class PyTextRtf(tk.Text):
                           self._insert_cursor_get,
                           self._create_style,
                           self._modify_style,
-                          self._sel_index_get)
+                          self._sel_index_get,
+                          self._move_keys)
 
         self.bind('<Key>', self._insert_char)
         self.bind('<Button-1>', self._mouse_click)
@@ -136,6 +145,11 @@ class PyTextRtf(tk.Text):
         for mod in MODS:
             if mod in event.keysym:
                 return True
+        return False
+
+    def _move_keys(self, event):
+        if event.keysym in MOVE_KEYS:
+            return True
         return False
 
     def _insert_cursor_get(self):
